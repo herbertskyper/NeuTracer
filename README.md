@@ -873,6 +873,7 @@ https://github.com/user-attachments/assets/579c3975-60b6-4382-b175-8ca125fb51ab
 ├── 📁 tools/                  # 辅助工具集
 ├── 📁 traincheck/             # TrainCheck静默错误检测框架
 ├── 📁 vmlinux.h/              # Linux内核头文件
+├── 📁 website/                # 项目网站
 ├── CMakeLists.txt             # CMake构建配置
 ├── Makefile                   # Make构建脚本
 ├── README.md                  # 项目说明文档（当前文件）

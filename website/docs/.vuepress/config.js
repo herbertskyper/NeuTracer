@@ -52,7 +52,7 @@ export default defineUserConfig({
         '/': 'heading',
       },
   }),
-  base: '/NeuTracer_Tutorial/', // 仓库名，按需修改
+  base: '/', // 仓库名，按需修改
 })
 
 
