@@ -21,7 +21,7 @@ NeuTracer 借鉴了 **Neutrino(OSDI 25)、Traincheck(OSDI 25)、JumpStarter(ATC 
 
 NeuTracer是一款基于eBPF技术的AI/ML**性能分析与异常检测**工具，通过零侵扰的内核级监控实现从GPU到Python应用层的全栈覆盖。与 Nsight 等工具相比，在保证 CUDA 事件收集率不变的前提下，把开销从大于25%降低到10%以内。该项目创新性地实现了基于**拉普拉斯继承规则**的**GPU内存泄漏检测算法**和结合**空间与时间维度**的**显存碎片化检测算法**，并引入[**MDTP**](#444-cuda显存碎片化异常)(Meomory Distribution Timeline Plotter)，增强碎片化可视化效果，相较于Compute Sanitizer内存泄漏检测工具，将至少6倍的延迟降低到**5秒**以内的低延迟和低于 **5%** 的系统开销。同时集成了**压缩感知技术**进行时序异常检测，在F1分数基本不变的情况下，通过多方面的算法将压缩感知平均加速了 **6.2倍**。NeuTracer还接入了Traincheck框架用于神经网络静默异常检测，并基于 **CUDA API** 拓展了不变量的范围，在测试中额外检出 **5%到10%** 违反的不变量关系。项目还集成**LLM驱动的智能分析框架**生成详细的优化建议，为AI/ML应用提供了低开销、高精度的全方位性能监控和异常诊断。
 
-我们还使用 vuepress 搭建了[NeuTracer 介绍手册](https://lightbreezz.github.io/NeuTracer_Tutorial/)。
+我们还使用 vuepress 搭建了[NeuTracer 介绍手册](https://neu-tracer.vercel.app/)。
 
 ## **五大核心特性**
 
@@ -257,7 +257,7 @@ eBPF 作为革命性的Linux内核技术，具备安全性、高效性、可编�
   | **内存分配**     | `cudaMalloc`/`cudaFree` | 分配大小、设备地址、时间戳 | 内存泄漏检测 | 异步操作跟踪         |
   | **内存传输**     | `cudaMemcpy`              | 传输方向、大小、带宽       | 数据传输优化 | 支持多种传输模式     |
 
-具体细节参考[在线文档数据收集部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/data.html)
+具体细节参考[在线文档数据收集部分](https://neu-tracer.vercel.app/guide/data.html)
 
 ### 2. ⑥NeuTracer  服务端（Python）
 
@@ -267,7 +267,7 @@ eBPF 作为革命性的Linux内核技术，具备安全性、高效性、可编�
     <img src="doc/README_figures/gRPC架构.png" alt="gRPC架构图" />
   </div>
 
-具体细节参考[在线文档服务端部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/server.html)
+具体细节参考[在线文档服务端部分](https://neu-tracer.vercel.app/guide/server.html)
 ### 3. ⑨⑩⑪异常检测与性能分析模块
 
 #### ⑨压缩感知
@@ -288,7 +288,7 @@ NeuTracer 在横轴上处于较右位置，代表其监控和分析过程对被�
 
 与依赖大量训练数据的传统异常检测方法不同，NeuTracer 支持无监督、无预训练的异常检测，适应多样化的 AI/ML 负载，易于部署到生产环境。
 
-具体细节参考[在线文档压缩感知部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/detector/cs.html)
+具体细节参考[在线文档压缩感知部分](https://neu-tracer.vercel.app/guide/detector/cs.html)
 #### ⑩CUDA 异常检测
 
 - GPU内存异常检测，通过eBPF实时监控CUDA API调用并收集相关数据，通过API调用的参数和返回值检测CUDA API异常和内存不足，采用基于**阈值采样**和**拉普拉斯继承规则**的算法检测**CUDA 内存泄漏**。
@@ -306,7 +306,7 @@ NeuTracer 在横轴上处于较右位置，代表其监控和分析过程对被�
   - 显存碎片化异常
     ![显存碎片化图2.png](doc/README_figures/显存碎片化图2.png) -->
 
-具体细节参考[在线文档CUDA异常检测部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/detect.html)
+具体细节参考[在线文档CUDA异常检测部分](https://neu-tracer.vercel.app/guide/detect.html)
 
 #### ⑪python侧部分
 
@@ -322,7 +322,7 @@ NeuTracer 在横轴上处于较右位置，代表其监控和分析过程对被�
 - 接入TrainCheck框架，并使用 **CUDA API** 等系统指标拓展了不变量的范围，实现基于不变量的神经网络异常检测，有效定位如神经元异常等异常。
   ![TrainCheck](doc/README_figures/TrainCheck.png)
 
-具体细节参考[在线文档神经网络常检测部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/detector/traincheck.html)
+具体细节参考[在线文档神经网络常检测部分](https://neu-tracer.vercel.app/guide/detector/traincheck.html)
 ### 4. ⑦ 可视化模块
 
 - 通过直观的图表、仪表盘和告警界面，使用户能够快速理解系统性能状况，及时发现和处理潜在问题。
@@ -351,7 +351,7 @@ NeuTracer 在横轴上处于较右位置，代表其监控和分析过程对被�
 - 基于人工智能技术对日志进行分析。日志是系统运行过程中的重要记录，包含了大量的系统状态信息、错误信息等。通过  AI 算法对日志进行分析，可以挖掘出潜在的异常模式。例如，利用自然语言处理技术对日志中的文本内容进行语义分析，识别出日志中的错误代码、警告信息等。然后，它可以将分析结果反馈给异常监测端，与其他数据源（如性能指标数据）相结合，更全面地进行异常监测，提高异常检测的准确性和效率。
   ![llm](doc/4-3-4-llm_analysis/image.png)
 
-具体细节参考[在线文档LLM增强部分](https://lightbreezz.github.io/NeuTracer_Tutorial/guide/detector/llm.html)
+具体细节参考[在线文档LLM增强部分](https://neu-tracer.vercel.app/guide/detector/llm.html)
 
 <!-- # 三、项目目标
 
@@ -686,7 +686,7 @@ NeuTracer 同样支持 OS 层及多机网络的性能与异常检测，覆盖 CP
 
 经过系统性优化策略修复后，从图中可以明显观察到显存使用模式的根本性改善。修复后的MDTP展现出截然不同的"紧凑型分布"特征：内存块在空间上呈现更加连续和规整的排列模式，深蓝色区域表示的大块连续内存分配明显增多，而碎片化导致的空白间隙显著减少。整个训练过程（时间0-70）中未出现任何红色OOM标记，表明内存分配策略的优化有效解决了碎片化问题。特别值得注意的是，修复后的内存分配呈现出明显的分层结构，不同大小的内存块能够有序排列，避免了碎片化现象的产生，使得训练程序能够稳定运行至完成。
 
-具体细节参考[在线文档GPU异常案例研究部分](https://lightbreezz.github.io/NeuTracer_Tutorial/test/#_4-4-5-gpu%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6)
+具体细节参考[在线文档GPU异常案例研究部分](https://neu-tracer.vercel.app/test/#_4-4-5-gpu%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6)
 
 ## 4.5 神经网络相关异常检测
 
