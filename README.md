@@ -824,27 +824,10 @@ NeuTracer 结合了压缩感知方法与动态模态分解方法，根据周期�
 | [VersaGuardian (IEEE TON 25)](https://github.com/AIOps-Lab-NKU/VersaGuardian)| 使用动态模态分解进行时序异常检测           | 借鉴了代码逻辑，衔接到我们的异常检测中，高效检测周期序列                                    |
 
 
-<!-- 演示视频如下：
-
-![视频图](doc/README_figures/视频封面.jpg)
-
-[Neutracer-哈尔滨工业大学（深圳）-演示视频](Neutracer_video.mp4) -->
-
-<!-- <video controls width="320">
-  <source src="Neutracer-哈尔滨工业大学（深圳）- 演示视频压缩.mp4" type="video/mp4">
-</video> -->
-
-<!-- 完整演示视频见： https://pan.quark.cn/s/46f6929336ff
-
-答辩视频（ppt讲解视频）见：https://pan.quark.cn/s/bd5fdd659594
-
-答辩ppt见： [Neutracer-哈尔滨工业大学（深圳）-答辩ppt](Neutracer-哈尔滨工业大学（深圳）-答辩ppt.pptx) -->
-
 # 六、演示视频
 
-<video src="video.mp4" width="640" height="480" controls>
-  您的浏览器不支持视频播放。
-</video>
+https://github.com/user-attachments/assets/579c3975-60b6-4382-b175-8ca125fb51ab
+
 
 # 七、完整目录索引
 
