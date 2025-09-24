@@ -1,0 +1,13 @@
+anomaly_score_example:
+  percentage: 90
+  topn: 2
+global:
+  random_state: 42  
+data:
+  rec_windows_per_cycle: 1
+  reconstruct:
+    window: 3600
+    stride: 14
+  detect:
+    window: 14
+    stride: 2

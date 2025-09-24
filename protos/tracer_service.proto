@@ -1,0 +1,216 @@
+syntax = "proto3";
+
+package NeuTracer;  // 使用NeuTracer作为包名，而不是neutracer
+
+// 定义基本跟踪数据结构
+message TraceData {
+  string timestamp = 1;
+  int32 event_type = 2;    // 0表示ENTRY，1表示EXIT
+  int64 cookie = 3;
+  string function_name = 4;
+  uint32 pid = 5;
+  uint32 tgid = 8;
+  uint64 call_count = 6;           // 函数调用次数
+  uint64 avg_duration_us = 7;      // 平均执行时间(微秒)
+}
+
+// GPU跟踪数据
+message GPUTraceData {
+  // 通用字段
+  string timestamp = 1;  // 所有事件类型共享的时间戳
+  
+  enum EventType {
+    UNKNOWN = 0;
+    CALLSTACK = 1;
+    MEMEVENT = 2;
+    CUDALAUNCHEVENT = 3;
+    MEMTRANSEVENT = 4;
+  }
+  EventType event_type = 2;  // 事件类型
+  
+  // 使用 oneof 替代 C++ 中的 union
+  oneof event_data {
+    CallstackEvent callstack_event = 3;
+    MemEvent mem_event = 4;
+    CudaLaunchEvent cuda_launch_event = 5;
+    MemTransEvent mem_trans_event = 6;
+  }
+  
+  // 各类事件的详细数据结构
+  message CallstackEvent {
+    uint32 pid = 1;
+    string stack_message = 2;  // 栈信息
+  }
+  
+  message MemEvent {
+    uint32 pid = 1;            // 进程ID
+    uint64 mem_size = 2;       // 内存大小(字节)
+  }
+  
+  message CudaLaunchEvent {
+    string kernel_name = 1;    // 内核函数名称
+    uint32 pid = 2;            // 进程ID
+    uint64 num_calls = 3;      // 调用次数
+  }
+
+   message MemTransEvent {
+    uint32 pid = 1;             // 进程ID
+    uint64 mem_trans_rate = 2;  // 内存传输速率(字节/秒)
+    string kind_str = 3;        // 传输方向描述(D2D, D2H, H2D, H2H)
+  }
+
+
+}
+
+// CPU跟踪数据
+message CPUTraceData {
+  string timestamp = 1;           // 时间戳
+  uint32 pid = 2;                 // 进程ID
+  uint32 ppid = 3;                // 父进程ID
+  string comm = 4;                // 进程名称
+  uint32 cpu_id = 5;              // CPU ID
+  uint64 oncpu_time = 6;          // 运行时间(微秒)
+  uint64 offcpu_time = 7;         // 等待时间(微秒)
+  double utilization = 8;         // CPU利用率(百分比)
+  
+  
+  // 异常指标
+  uint32 migrations_count = 10;   // CPU迁移计数
+  uint32 numa_migrations = 11;    // NUMA迁移计数
+  uint32 hotspot_cpu = 12;        // 热点CPU
+  double hotspot_percentage = 13; // 热点CPU使用百分比
+  
+}
+
+// 内存跟踪数据
+message MemoryTraceData {
+  // 基本信息
+  string timestamp = 1;           // 时间戳
+  uint32 pid = 2;                 // 进程ID
+  uint32 tgid = 3;
+  string comm = 4;                // 进程名称
+  string operation = 5;           // 操作类型(alloc/free)
+  uint64 size = 6;                // 分配/释放大小(字节)
+  uint64 addr = 7;                // 内存地址
+  uint64 stack_id = 8;            // 栈ID
+  
+  // 统计数据
+  uint64 total_allocs = 9;        // 总分配次数
+  uint64 total_frees = 10;        // 总释放次数
+  uint64 current_memory = 11;     // 当前内存使用量
+  uint64 peak_memory = 12;        // 峰值内存使用量
+  
+  // 异常检测相关字段
+  int32 mem_pattern = 13;         // 内存使用模式(0:未知,1:稳定型,2:增长型,3:波动型,4:泄漏型)
+  uint32 large_allocs = 14;       // 大型内存分配次数
+  uint32 fragmentation_score = 15;// 碎片化评分(0-100)
+  bool leak_suspected = 16;       // 是否怀疑存在内存泄漏
+  uint32 churn_score = 17;        // 内存周转率评分(0-100)
+  
+  // 异常详情 (可选)
+  message Anomaly {
+    string description = 1;       // 异常描述
+    double severity = 2;          // 严重度(0-1)
+  }
+  repeated Anomaly anomalies = 18; // 检测到的异常列表
+}
+
+
+// 网络跟踪数据
+message NetworkTraceData {
+    // 基本信息
+    string timestamp = 1;           // 时间戳
+    uint32 pid = 2;                 // 进程ID
+    uint32 tgid = 3;
+    
+    string comm = 4;                // 进程名称
+    bool is_send = 5;               // 是否发送
+    uint64 bytes = 6;               // 传输字节数
+    
+    // 网络地址信息
+    string src_addr = 7;            // 源IP地址
+    string dst_addr = 8;            // 目标IP地址
+    uint32 src_port = 9;            // 源端口
+    uint32 dst_port = 10;           // 目标端口
+    string protocol = 11;           // 协议
+    
+    // 统计数据
+    uint64 tx_bytes = 12;           // 总发送字节数
+    uint64 rx_bytes = 13;           // 总接收字节数
+    uint64 tx_packets = 14;         // 总发送包数
+    uint64 rx_packets = 15;         // 总接收包数
+    
+    // 异常检测相关字段
+    int32 net_pattern = 16;         // 网络使用模式
+    uint32 retransmits = 17;        // 重传次数
+    uint32 errors = 18;             // 错误次数
+    bool is_bursty = 19;            // 是否突发型
+    uint32 active_connections = 20; // 活跃连接数
+    
+    // 异常详情 (可选)
+    message Anomaly {
+        string description = 1;     // 异常描述
+        double severity = 2;        // 严重度(0-1)
+    }
+    repeated Anomaly anomalies = 21; // 检测到的异常列表
+}
+
+// IO跟踪数据
+message IOTraceData {
+  // 基本信息
+  string timestamp = 1;          // 时间戳
+  uint32 pid = 2;                // 进程ID
+  string comm = 3;               // 进程名称
+  string operation = 4;          // 操作类型 (READ, WRITE, SYNC等)
+  uint64 bytes = 5;              // 操作字节数
+  double latency_ms = 6;         // 操作延迟(毫秒)
+  string device = 7;             // 设备名称
+  uint32 major = 8;              // 主设备号
+  uint32 minor = 9;              // 次设备号
+  
+  // 统计数据
+  uint64 read_bytes = 10;        // 累计读取字节
+  uint64 write_bytes = 11;       // 累计写入字节
+  uint64 read_ops = 12;          // 读操作计数
+  uint64 write_ops = 13;         // 写操作计数
+  double avg_read_latency = 14;  // 平均读取延迟
+  double avg_write_latency = 15; // 平均写入延迟
+  
+}
+
+// 批量数据提交
+message TraceBatch {
+  repeated TraceData trace_data = 1;
+  repeated GPUTraceData gpu_trace_data = 2;
+  repeated CPUTraceData cpu_trace_data = 3;
+  repeated MemoryTraceData memory_trace_data = 4;
+  repeated NetworkTraceData network_trace_data = 5;
+  repeated IOTraceData io_trace_data = 6;
+}
+
+// 服务响应
+message TraceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// 状态请求
+message StatusRequest {
+  string client_id = 1;
+}
+
+// 状态响应
+message StatusResponse {
+  bool active = 1;
+  int64 received_traces = 2;
+  string server_version = 3;
+}
+
+// 定义跟踪服务
+service TracerService {
+  // 发送跟踪数据批次
+  rpc SendTraceBatch(TraceBatch) returns (TraceResponse);
+  
+  // 获取服务状态
+  rpc GetStatus(StatusRequest) returns (StatusResponse);
+}

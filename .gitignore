@@ -1,0 +1,78 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# cache
+*__pycache__
+
+build/
+.output/
+.cache/
+clangd/
+.vscode/
+log/
+temp/
+
+zmonitor/
+protobuf-3.11.4/
+protoc3/
+__pycache__/
+protos/python/
+json/
+output/
+project/
+scripts/
+sym/    
+analyzer/compressed-sensing/dataset
+analyzer/compressed-sensing/test_output*
+analyzer/compressed-sensing/result
+analyzer/compressed-sensing/note
+# for develop
+compile_commands.json
+command.sh
+TODO.md
+*.txt
+!requirements.txt
+*.pftrace
+
+# python
+data/
+
+# other
+vmlinux.h
+bpftool
+perfetto_trace_pb2.py
+FlameGraph/
+user_manual_self.md
+
+*tmp
+.DS_Store

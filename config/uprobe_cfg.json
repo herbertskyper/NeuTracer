@@ -1,0 +1,69 @@
+{
+    "cuda_func_sym": {
+        "cudaMalloc": "cudaMalloc",
+        "cudaFree": "cudaFree",
+        "cudaDeviceSynchronize": "cudaDeviceSynchronize",
+        "cudaGetLastError": "cudaGetLastError",
+        "cudaGetDevice": "cudaGetDevice",
+        "cudaGetDeviceCount": "cudaGetDeviceCount",
+        "cudaGetDeviceProperties": "cudaGetDeviceProperties",
+        "cudaMemGetInfo": "cudaMemGetInfo",
+        "cudaMallocHost": "cudaMallocHost",
+        "cudaStreamCreateWithFlags": "cudaStreamCreateWithFlags",
+        "cudaFuncSetAttribute": "cudaFuncSetAttribute",
+        "cudaMemcpyAsync": "cudaMemcpyAsync",
+        "cudaMemset": "cudaMemset",
+        "cudaLaunchKernel": "cudaLaunchKernel"
+    },
+    "custom_sym":{
+        "vectorAdd": "vectorAdd"
+    },
+    "libtorch_func_sym": {
+        "linear_forward": "_ZN5torch2nn10LinearImpl7forwardERKN2at6TensorE"
+    },
+    
+    "cublas_func_sym": {
+        "cublasSgemm": "cublasSgemm",
+        "cublasDgemm": "cublasDgemm", 
+        "cublasCgemm": "cublasCgemm",
+        "cublasZgemm": "cublasZgemm",
+        "cublasSgemv": "cublasSgemv",
+        "cublasDgemv": "cublasDgemv",
+        "cublasSgeam": "cublasSgeam",
+        "cublasDgeam": "cublasDgeam",
+        "cublasCreate": "cublasCreate_v2",
+        "cublasDestroy": "cublasDestroy_v2"
+    },
+
+    "cudnn_func_sym": {
+        "cudnnCreate": "cudnnCreate",
+        "cudnnDestroy": "cudnnDestroy",
+        "cudnnConvolutionForward": "cudnnConvolutionForward",
+        "cudnnConvolutionBackwardData": "cudnnConvolutionBackwardData",
+        "cudnnConvolutionBackwardFilter": "cudnnConvolutionBackwardFilter",
+        "cudnnPoolingForward": "cudnnPoolingForward",
+        "cudnnPoolingBackward": "cudnnPoolingBackward",
+        "cudnnActivationForward": "cudnnActivationForward",
+        "cudnnActivationBackward": "cudnnActivationBackward",
+        "cudnnSoftmaxForward": "cudnnSoftmaxForward",
+        "cudnnSoftmaxBackward": "cudnnSoftmaxBackward"
+    },
+
+    "nccl_func_sym": {
+        "ncclCommInitRank": "ncclCommInitRank",
+        "ncclAllReduce": "ncclAllReduce",
+        "ncclBroadcast": "ncclBroadcast",
+        "ncclReduce": "ncclReduce",
+        "ncclAllGather": "ncclAllGather",
+        "ncclReduceScatter": "ncclReduceScatter",
+        "ncclCommDestroy": "ncclCommDestroy",
+        "ncclGetUniqueId": "ncclGetUniqueId"
+    },
+    "cuda_lib_path": "/home/fatsheep/miniconda3/envs/10/lib/python3.10/site-packages/nvidia/cuda_runtime/lib/libcudart.so.12",
+    "libtorch_lib_path": "/data/OSCOMP2025-proj275/libtorch/lib/libtorch_cpu.so",
+    "cublas_lib_path":"/usr/local/cuda-12.6/targets/x86_64-linux/lib/libcublas.so",
+    "cudnn_lib_path":"/home/fatsheep/miniconda3/envs/10/lib/python3.10/site-packages/nvidia/cudnn/lib/libcudnn.so.9",
+    "nccl_lib_path":"/home/fatsheep/miniconda3/envs/10/lib/python3.10/site-packages/nvidia/nccl/lib/libnccl.so.2",
+    "trace_file_path": "/home/light7an/neu-trace/build/test_cuda_tracer",
+    "my_custom_path": "/home/light7an/neu-trace/test/lib/libcuda_operations.so"
+}

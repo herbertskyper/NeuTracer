@@ -1,0 +1,12 @@
+build/
+dist/
+llm_cli_tool.egg-info/
+__pycache__/
+*.pyc
+
+test.sh
+
+.mypy_cache/
+.pytest_cache/
+.vscode
+*.log

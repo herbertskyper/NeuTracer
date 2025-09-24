@@ -1,0 +1,38 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9099:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - /etc/localtime:/etc/localtime:ro  # 添加这一行，挂载宿主机时间
+      - /etc/timezone:/etc/timezone:ro    # 添加这一行，挂载宿主机时区
+    networks:
+      - monitoring
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Docker 20.10+
+    environment:
+      - TZ=Asia/Shanghai  # 设置为您所在的时区，例如中国使用Asia/Shanghai
+  grafana:
+    image: grafana/grafana-oss
+    ports:
+      - "3099:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana  # 数据目录
+      - ./grafana/config:/etc/grafana     # 配置目录
+      - ./grafana/log:/var/log/grafana   # 日志目录
+      - /etc/localtime:/etc/localtime:ro  # 添加这一行，挂载宿主机时间
+      - /etc/timezone:/etc/timezone:ro    # 添加这一行，挂载宿主机时区
+    environment:
+      - TZ=Asia/Shanghai                  # 添加这一行
+      - GF_SERVER_ROOT_URL=http://localhost:3099  # 关键配置
+      - GF_SERVER_SERVE_FROM_SUB_PATH=false
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

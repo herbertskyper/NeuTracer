@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "warnings": [],
+  "performance_issues": [],
+  "logical_inconsistencies": [],
+  "incomplete_responses": [],
+  "summary": {
+    "total_issues": 0,
+    "high_severity_count": 0,
+    "errors_count": 0,
+    "warnings_count": 0,
+    "performance_issues_count": 0,
+    "recommendation": "未发现明显问题"
+  }
+}
